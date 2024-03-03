@@ -24,6 +24,11 @@ public class ReserveController {
         return reserveService.reserveFromMain(accountNo, amount);
     }
 
+    @PostMapping("/reserveBundle")
+    private ResponseEntity<String> reserveFromBundle(@RequestParam int accountNo, @RequestParam double minutes, @RequestParam int sms){
+        return reserveService.reserveFromBundle(accountNo, minutes, sms);
+    }
+
     //consume/delete reserve by transactionId
     @DeleteMapping("/deleteReserve")
     private ResponseEntity<String> deleteReserve(@RequestParam String transactionId){
