@@ -16,7 +16,7 @@ public class AccountBalanceController {
     BalanceUpdateService balanceService;
     @GetMapping("/test")
     String testing(){
-        return "hello frrom balance";
+        return "hello from balance";
     }
 
     //topup account
