@@ -29,6 +29,15 @@ public class ReserveController {
         return reserveService.reserveFromBundle(accountNo, minutes, sms);
     }
 
+    @PostMapping("/reserveBalance")
+    private  ResponseEntity<String> reserveFromAnyAccount(@RequestParam(name = "accountNo") int accountNo,
+                                                          @RequestParam(name = "bdt", required = false) Double bdt,
+                                                          @RequestParam(name = "minutes", defaultValue = "0") Double minutes,
+                                                          @RequestParam(name = "sms", defaultValue = "0") Integer sms){
+        return reserveService.reserveFromAnyAccount(accountNo, bdt, minutes, sms);
+    }
+
+
     //consume/delete reserve by transactionId
     @DeleteMapping("/deleteReserve")
     private ResponseEntity<String> deleteReserve(@RequestParam String transactionId){

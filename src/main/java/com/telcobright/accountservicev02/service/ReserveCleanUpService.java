@@ -20,7 +20,7 @@ public class ReserveCleanUpService {
 
     @Scheduled(fixedRate = 30000)
     public void cleanUpExpiredReserve(){
-        System.out.println("Cleaning up Expired reserves");
+        //System.out.println("Cleaning up Expired reserves");
         Instant expirationTime = Instant.now().minusSeconds(90);
         List<Reserve> expiredReserves = reserveRepo.findAllByCreationTimeBefore(expirationTime);
 

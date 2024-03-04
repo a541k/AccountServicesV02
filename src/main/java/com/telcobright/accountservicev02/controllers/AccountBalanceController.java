@@ -30,6 +30,17 @@ public class AccountBalanceController {
         return balanceService.topUpBundleAccount(accountId, minutes, smsCount);
     }
 
+    @PutMapping("/topup")
+    ResponseEntity<String> topUpAnyAccount(
+            @RequestParam(name = "accountId") int accountId,
+            @RequestParam(name = "bdt", required = false) Double bdt,
+            @RequestParam(name = "minutes", defaultValue = "0") Double minutes,
+            @RequestParam(name = "sms", defaultValue = "0") Integer sms
+    ){
+        return balanceService.topUpAnyAccount(accountId, bdt, minutes, sms);
+    }
+
+
     @GetMapping("/checkBalance")
     ResponseEntity<List<BalanceDto>> checkAccountBalance(@RequestParam int userId){
         return balanceService.checkAccountBalance(userId);

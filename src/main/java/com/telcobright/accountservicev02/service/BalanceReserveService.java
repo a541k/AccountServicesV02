@@ -74,6 +74,44 @@ public class BalanceReserveService {
         }
     }
 
+    public ResponseEntity<String> reserveFromAnyAccount(Integer accountNo, Double bdt, Double minutes, Integer sms) {
+        try{
+            Account targetAccount = checkAccountExistence(accountNo);
+
+            Reserve reserve = new Reserve();
+
+            //reserve main account balance
+            if(targetAccount.getAccountType().equals(AccountType.MAIN)){
+                if(targetAccount.getMainAccountBalance() < bdt) throw new Exception("INSUFFICIENT BALANCE");
+
+                targetAccount.setMainAccountBalance( targetAccount.getMainAccountBalance() - bdt);
+                reserve.setMainAccountBalance(bdt);
+            }
+
+            //reserve bundle account balance
+            else if (targetAccount.getAccountType().equals(AccountType.BUNDLE)) {
+                Pair<Double, Integer> bundleBalance = targetAccount.getBundleAccountBalance();
+                if(bundleBalance.a < minutes || bundleBalance.b < sms) throw new Exception("INSUFFICIENT BALANCE");
+
+                Pair<Double, Integer> newBundleBalance = new Pair<>(bundleBalance.a - minutes, bundleBalance.b - sms);
+
+                targetAccount.setBundleAccountBalance(newBundleBalance);
+                reserve.setBundleAccountBalance(new Pair<>(minutes, sms));
+
+            }
+
+            reserve.setTransactionId(getRandomString());
+            reserve.setAccount(targetAccount);
+            reserveRepo.save(reserve);
+            accountRepo.save(targetAccount);
+
+            return new ResponseEntity<>("SUCCESSFUL", HttpStatus.OK);
+
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 
     public ResponseEntity<String> deleteReserve(String transactionId) {
@@ -100,7 +138,7 @@ public class BalanceReserveService {
                 double refundMinutes = targetReserve.getBundleAccountBalance().a;
                 int refundSmsCount = targetReserve.getBundleAccountBalance().b;
 
-                targetAccount.setBundleAccountBalance(new Pair<>(refundMinutes, refundSmsCount));
+                targetAccount.setBundleAccountBalance(new Pair<>(targetAccount.getBundleAccountBalance().a + refundMinutes, targetAccount.getBundleAccountBalance().b + refundSmsCount));
             }
 
             accountRepo.save(targetAccount);
