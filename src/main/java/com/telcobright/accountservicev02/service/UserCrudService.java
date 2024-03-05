@@ -1,5 +1,6 @@
 package com.telcobright.accountservicev02.service;
 
+import com.telcobright.accountservicev02.dto.ResellerRelationBody;
 import com.telcobright.accountservicev02.dto.UserDto;
 import com.telcobright.accountservicev02.entities.User;
 import com.telcobright.accountservicev02.repositories.UserRepository;
@@ -36,9 +37,8 @@ public class UserCrudService {
 
     public ResponseEntity<UserDto> getUserById(int id) {
         try{
-            Optional<User> optionalUser = userRepo.findById(id);
-            if(optionalUser.isEmpty()) throw new Exception("No User With Provided Id");
-            User user = optionalUser.get();
+
+            User user = checkUserExistence(id); // returns user if exist else throw exception
 
             UserDto userDto = new UserDto();
             userDto.setUserName(user.getUserName());
@@ -51,4 +51,38 @@ public class UserCrudService {
             return new ResponseEntity<>(new UserDto(), HttpStatus.NOT_FOUND);
         }
     }
+
+    public ResponseEntity<String> addResellerRelation(Integer userId, ResellerRelationBody relation) {
+        try{
+            User user = checkUserExistence(userId); // returns user if exist else throw exception
+            User parent = null;
+            if(relation.getParentId()!=null)
+                parent = checkUserExistence(relation.getParentId());
+
+            //List<User> childrenList = new ArrayList<>();
+
+            for(int childId : relation.getChildrenUserIdList()){
+                User child = checkUserExistence(childId);
+                child.setParent(user);
+                user.getChildren().add(child);
+            }
+            user.setParent(parent);
+            userRepo.save(user);
+
+            return new ResponseEntity<>("Success", HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    // returns user if exist else throw exception
+    private User checkUserExistence(Integer userId) throws Exception{
+        Optional<User> optionalUser = userRepo.findById(userId);
+        if(optionalUser.isEmpty()) throw new Exception("USER DOES NOT EXIST");
+        return optionalUser.get();
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.telcobright.accountservicev02.controllers;
 
+import com.telcobright.accountservicev02.dto.ResellerRelationBody;
 import com.telcobright.accountservicev02.dto.UserDto;
 import com.telcobright.accountservicev02.entities.User;
 import com.telcobright.accountservicev02.service.UserCrudService;
@@ -29,6 +30,12 @@ public class UserCrudController {
     @GetMapping("/user/{userId}")
     ResponseEntity<UserDto> getUserById(@PathVariable int userId){
         return userService.getUserById(userId);
+    }
+
+
+    @PostMapping("/addResellerRelation")
+    ResponseEntity<String> addResellerRelation(@RequestParam Integer userId, @RequestBody ResellerRelationBody relation){
+        return userService.addResellerRelation(userId, relation);
     }
 
 

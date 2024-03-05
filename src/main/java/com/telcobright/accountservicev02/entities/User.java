@@ -4,6 +4,7 @@ package com.telcobright.accountservicev02.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,10 @@ public class User {
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     List<Account> accountsList;
 
+    @ManyToOne
+    User parent = null;
 
-
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+    List<User> children = new ArrayList<>();
 
 }
