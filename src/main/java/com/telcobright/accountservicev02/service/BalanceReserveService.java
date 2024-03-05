@@ -21,58 +21,61 @@ public class BalanceReserveService {
 
     @Autowired
     ReserveRepository reserveRepo;
-    public ResponseEntity<String> reserveFromMain(int accountNo, double amount) {
-        try{
-            Account targetAccount = checkAccountExistence(accountNo);
 
-            if(!targetAccount.getAccountType().equals(AccountType.MAIN)) throw new Exception("MUST BE A MAIN ACCOUNT");
 
-            if(targetAccount.getMainAccountBalance() < amount) throw new Exception("INSUFFICIENT BALANCE");
 
-            targetAccount.setMainAccountBalance( targetAccount.getMainAccountBalance() - amount);
-
-            Reserve reserve = new Reserve();
-            reserve.setMainAccountBalance(amount);
-            reserve.setTransactionId(getRandomString());
-            reserve.setAccount(targetAccount);
-
-            reserveRepo.save(reserve);
-            accountRepo.save(targetAccount);
-
-            return new ResponseEntity<>("SUCCESSFUL", HttpStatus.OK);
-
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    public ResponseEntity<String> reserveFromBundle(int accountNo, double minutes, int sms) {
-        try{
-            Account targetAccount = checkAccountExistence(accountNo);
-            if(!targetAccount.getAccountType().equals(AccountType.BUNDLE)) throw new Exception("MUST BE A BUNDLE ACCOUNT");
-
-            Pair<Double, Integer> bundleBalance = targetAccount.getBundleAccountBalance();
-            if(bundleBalance.a < minutes || bundleBalance.b < sms) throw new Exception("INSUFFICIENT BALANCE");
-
-            Pair<Double, Integer> newBundleBalance = new Pair<>(bundleBalance.a - minutes, bundleBalance.b - sms);
-
-            targetAccount.setBundleAccountBalance(newBundleBalance);
-            accountRepo.save(targetAccount);
-
-            Reserve reserve = new Reserve();
-            reserve.setBundleAccountBalance(newBundleBalance);
-            reserve.setTransactionId(getRandomString());
-            reserve.setAccount(targetAccount);
-
-            reserveRepo.save(reserve);
-
-            return new ResponseEntity<>("RESERVED", HttpStatus.OK);
-
-        }
-        catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
+//    public ResponseEntity<String> reserveFromMain(int accountNo, double amount) {
+//        try{
+//            Account targetAccount = checkAccountExistence(accountNo);
+//
+//            if(!targetAccount.getAccountType().equals(AccountType.MAIN)) throw new Exception("MUST BE A MAIN ACCOUNT");
+//
+//            if(targetAccount.getMainAccountBalance() < amount) throw new Exception("INSUFFICIENT BALANCE");
+//
+//            targetAccount.setMainAccountBalance( targetAccount.getMainAccountBalance() - amount);
+//
+//            Reserve reserve = new Reserve();
+//            reserve.setMainAccountBalance(amount);
+//            reserve.setTransactionId(getRandomString());
+//            reserve.setAccount(targetAccount);
+//
+//            reserveRepo.save(reserve);
+//            accountRepo.save(targetAccount);
+//
+//            return new ResponseEntity<>("SUCCESSFUL", HttpStatus.OK);
+//
+//        }catch (Exception e){
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//    }
+//
+//    public ResponseEntity<String> reserveFromBundle(int accountNo, double minutes, int sms) {
+//        try{
+//            Account targetAccount = checkAccountExistence(accountNo);
+//            if(!targetAccount.getAccountType().equals(AccountType.BUNDLE)) throw new Exception("MUST BE A BUNDLE ACCOUNT");
+//
+//            Pair<Double, Integer> bundleBalance = targetAccount.getBundleAccountBalance();
+//            if(bundleBalance.a < minutes || bundleBalance.b < sms) throw new Exception("INSUFFICIENT BALANCE");
+//
+//            Pair<Double, Integer> newBundleBalance = new Pair<>(bundleBalance.a - minutes, bundleBalance.b - sms);
+//
+//            targetAccount.setBundleAccountBalance(newBundleBalance);
+//            accountRepo.save(targetAccount);
+//
+//            Reserve reserve = new Reserve();
+//            reserve.setBundleAccountBalance(newBundleBalance);
+//            reserve.setTransactionId(getRandomString());
+//            reserve.setAccount(targetAccount);
+//
+//            reserveRepo.save(reserve);
+//
+//            return new ResponseEntity<>("RESERVED", HttpStatus.OK);
+//
+//        }
+//        catch (Exception e){
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     public ResponseEntity<String> reserveFromAnyAccount(Integer accountNo, Double bdt, Double minutes, Integer sms) {
         try{
@@ -152,7 +155,7 @@ public class BalanceReserveService {
     }
 
 
-
+//----------------------------------------------------------------------------------------------------
 
 
 

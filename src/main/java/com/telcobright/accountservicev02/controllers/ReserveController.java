@@ -19,15 +19,15 @@ public class ReserveController {
 
 
     //reserve amount
-    @PostMapping("/reserveMain")
-    private ResponseEntity<String> reserveFromMain(@RequestParam int accountNo, @RequestParam double amount){
-        return reserveService.reserveFromMain(accountNo, amount);
-    }
-
-    @PostMapping("/reserveBundle")
-    private ResponseEntity<String> reserveFromBundle(@RequestParam int accountNo, @RequestParam double minutes, @RequestParam int sms){
-        return reserveService.reserveFromBundle(accountNo, minutes, sms);
-    }
+//    @PostMapping("/reserveMain")
+//    private ResponseEntity<String> reserveFromMain(@RequestParam int accountNo, @RequestParam double amount){
+//        return reserveService.reserveFromMain(accountNo, amount);
+//    }
+//
+//    @PostMapping("/reserveBundle")
+//    private ResponseEntity<String> reserveFromBundle(@RequestParam int accountNo, @RequestParam double minutes, @RequestParam int sms){
+//        return reserveService.reserveFromBundle(accountNo, minutes, sms);
+//    }
 
     @PostMapping("/reserveBalance")
     private  ResponseEntity<String> reserveFromAnyAccount(@RequestParam(name = "accountNo") int accountNo,

@@ -21,4 +21,7 @@ public class User {
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     List<Account> accountsList;
 
+
+
+
 }

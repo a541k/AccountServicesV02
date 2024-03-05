@@ -24,47 +24,47 @@ public class BalanceUpdateService {
     @Autowired
     UserRepository userRepo;
 
-    public ResponseEntity<String> topUpMainAccount(int accountId, double amount) {
-        try{
-            //gets account if exists
-            Account targetAccount = checkAccountExistence(accountId);
-
-            targetAccount.setMainAccountBalance( targetAccount.getMainAccountBalance() + amount );
-
-            accountRepo.save(targetAccount);
-
-            return new ResponseEntity<>("Successful", HttpStatus.OK);
-
-        }
-        catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-
-    }
-
-
-    public ResponseEntity<String> topUpBundleAccount(int accountId, double minutes, int smsCount) {
-        try{
-            //gets account if exists
-            Account targetAccount = checkAccountExistence(accountId);
-            //System.out.println(targetAccount.getBundleAccountBalance());
-
-            Pair<Double, Integer> targetBundleAccount = targetAccount.getBundleAccountBalance();
-
-            double newMinutesBalance = targetBundleAccount.a + minutes;
-            int newSmsBalance = targetBundleAccount.b + smsCount;
-
-            targetAccount.setBundleAccountBalance(new Pair<>(newMinutesBalance, newSmsBalance));
-
-            accountRepo.save(targetAccount);
-
-            return new ResponseEntity<>("Successful", HttpStatus.OK);
-
-        }
-        catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
+//    public ResponseEntity<String> topUpMainAccount(int accountId, double amount) {
+//        try{
+//            //gets account if exists
+//            Account targetAccount = checkAccountExistence(accountId);
+//
+//            targetAccount.setMainAccountBalance( targetAccount.getMainAccountBalance() + amount );
+//
+//            accountRepo.save(targetAccount);
+//
+//            return new ResponseEntity<>("Successful", HttpStatus.OK);
+//
+//        }
+//        catch (Exception e){
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//
+//    }
+//
+//
+//    public ResponseEntity<String> topUpBundleAccount(int accountId, double minutes, int smsCount) {
+//        try{
+//            //gets account if exists
+//            Account targetAccount = checkAccountExistence(accountId);
+//            //System.out.println(targetAccount.getBundleAccountBalance());
+//
+//            Pair<Double, Integer> targetBundleAccount = targetAccount.getBundleAccountBalance();
+//
+//            double newMinutesBalance = targetBundleAccount.a + minutes;
+//            int newSmsBalance = targetBundleAccount.b + smsCount;
+//
+//            targetAccount.setBundleAccountBalance(new Pair<>(newMinutesBalance, newSmsBalance));
+//
+//            accountRepo.save(targetAccount);
+//
+//            return new ResponseEntity<>("Successful", HttpStatus.OK);
+//
+//        }
+//        catch (Exception e){
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     public ResponseEntity<String> topUpAnyAccount(int accountId, Double bdt, Double minutes, Integer sms) {
         try{

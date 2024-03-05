@@ -20,15 +20,15 @@ public class AccountBalanceController {
     }
 
     //topup account
-    @PutMapping("/topup/MAIN")
-    ResponseEntity<String> topUpMainAccount(@RequestParam int accountId, @RequestParam double amount){
-        return balanceService.topUpMainAccount(accountId, amount);
-    }
-
-    @PutMapping("/topup/BUNDLE")
-    ResponseEntity<String> topUpBundleAccount(@RequestParam int accountId, @RequestParam double minutes, @RequestParam int smsCount){
-        return balanceService.topUpBundleAccount(accountId, minutes, smsCount);
-    }
+//    @PutMapping("/topup/MAIN")
+//    ResponseEntity<String> topUpMainAccount(@RequestParam int accountId, @RequestParam double amount){
+//        return balanceService.topUpMainAccount(accountId, amount);
+//    }
+//
+//    @PutMapping("/topup/BUNDLE")
+//    ResponseEntity<String> topUpBundleAccount(@RequestParam int accountId, @RequestParam double minutes, @RequestParam int smsCount){
+//        return balanceService.topUpBundleAccount(accountId, minutes, smsCount);
+//    }
 
     @PutMapping("/topup")
     ResponseEntity<String> topUpAnyAccount(

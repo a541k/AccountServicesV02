@@ -30,6 +30,12 @@ public class AccountCrudService {
         try{
             User targetUser = validateAndGetUser(account.getUserId());
 
+            //check if already has an account of provided type
+            List<Account> accountListOfUser = targetUser.getAccountsList();
+            for(Account anyAccount: accountListOfUser){
+                if(anyAccount.getAccountType().equals(account.getAccountType())) throw new Exception("USER ALREADY HAS A ACCOUNT OF THAT TYPE");
+            }
+
             Account newAccount = new Account();
             newAccount.setUser(targetUser);
             newAccount.setAccountType(account.getAccountType());
