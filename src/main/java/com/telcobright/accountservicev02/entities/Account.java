@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.antlr.v4.runtime.misc.Pair;
 
 
@@ -14,6 +15,7 @@ import org.antlr.v4.runtime.misc.Pair;
 @Data
 //@AllArgsConstructor
 //@NoArgsConstructor
+@ToString(exclude = "user")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

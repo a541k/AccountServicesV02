@@ -1,5 +1,6 @@
 package com.telcobright.accountservicev02.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class Reserve {
     private Instant creationTime = Instant.now();
     //private Duration timeOutDuration;
 
+    @JsonIgnore
     @OneToOne(optional = false)
     private Account account;
 

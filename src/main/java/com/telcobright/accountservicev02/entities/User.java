@@ -1,6 +1,7 @@
 package com.telcobright.accountservicev02.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,9 +23,11 @@ public class User {
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     List<Account> accountsList;
 
+    @JsonIgnore
     @ManyToOne
     User parent = null;
 
+    @JsonIgnore
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     List<User> children = new ArrayList<>();
 

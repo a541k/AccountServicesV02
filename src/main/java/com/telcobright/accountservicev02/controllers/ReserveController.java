@@ -51,6 +51,16 @@ public class ReserveController {
     }
 
 
+    //reserve balance from acc with reseller relation--
+    @PostMapping("/reserveReseller")
+    private ResponseEntity<String> reserveReseller(@RequestParam(name = "accountNo") int accountNo,
+                                                   @RequestParam(name = "bdt", required = false) Double bdt,
+                                                   @RequestParam(name = "minutes", defaultValue = "0") Double minutes,
+                                                   @RequestParam(name = "sms", defaultValue = "0") Integer sms){
+        return reserveService.reserveReseller(accountNo, bdt, minutes, sms);
+    }
+
+
 
 
 }
